@@ -7,6 +7,7 @@ using Village.Games.Models;
 
 namespace Village.Games.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class TodoController : Controller
     {
@@ -39,8 +40,27 @@ namespace Village.Games.Controllers
             }
             return new ObjectResult(item);
         }
-
+        /// <summary>
+        /// Creates a TodoItem.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///        "id": 1,
+        ///        "name": "Item1",
+        ///        "isComplete": true
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="item"></param>
+        /// <returns>A newly-created TodoItem</returns>
+        /// <response code="201">Returns the newly-created item</response>
+        /// <response code="400">If the item is null</response>     
         [HttpPost]
+        [ProducesResponseType(typeof(TodoItem), 201)]
+        [ProducesResponseType(typeof(TodoItem), 400)]
         public IActionResult Create([FromBody] TodoItem item)
         {
             if (item == null)
@@ -76,6 +96,11 @@ namespace Village.Games.Controllers
             return new NoContentResult();
         }
 
+        /// <summary>
+        /// Deletes a specific TodoItem
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
