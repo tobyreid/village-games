@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -41,6 +42,11 @@ namespace Village.Games
                     Contact = new Contact { Name = "Shayne Boyer", Email = "", Url = "https://twitter.com/spboyer" },
                     License = new License { Name = "Use under LICX", Url = "https://example.com/license" }
                 });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var basePath = AppContext.BaseDirectory;
+                var xmlPath = Path.Combine(basePath, "Village.Games.xml");
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
