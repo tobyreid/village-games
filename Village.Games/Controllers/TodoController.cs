@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Village.Games.Models;
 
 namespace Village.Games.Controllers
@@ -25,20 +26,20 @@ namespace Village.Games.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TodoItem> GetAll()
+        public async Task<IEnumerable<TodoItem>> GetAllAsync()
         {
-            return _context.TodoItems.ToList();
+            return await _context.TodoItems.ToListAsync();
         }
 
         [HttpGet("{id}", Name = "GetTodo")]
-        public IActionResult GetById(long id)
+        public async Task<IActionResult> GetByIdAsync(long id)
         {
-            var item = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+            var item = await _context.TodoItems.FirstOrDefaultAsync(t => t.Id == id);
             if (item == null)
             {
                 return NotFound();
             }
-            return new ObjectResult(item);
+            return new  ObjectResult(item);
         }
         /// <summary>
         /// Creates a TodoItem.
@@ -61,7 +62,7 @@ namespace Village.Games.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(TodoItem), 201)]
         [ProducesResponseType(typeof(TodoItem), 400)]
-        public IActionResult Create([FromBody] TodoItem item)
+        public async Task<IActionResult> CreateAsync([FromBody] TodoItem item)
         {
             if (item == null)
             {
@@ -69,20 +70,20 @@ namespace Village.Games.Controllers
             }
 
             _context.TodoItems.Add(item);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return CreatedAtRoute("GetTodo", new { id = item.Id }, item);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(long id, [FromBody] TodoItem item)
+        public async Task<IActionResult> UpdateAsync(long id, [FromBody] TodoItem item)
         {
             if (item == null || item.Id != id)
             {
                 return BadRequest();
             }
 
-            var todo = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+            var todo = await _context.TodoItems.FirstOrDefaultAsync(t => t.Id == id);
             if (todo == null)
             {
                 return NotFound();
@@ -92,7 +93,7 @@ namespace Village.Games.Controllers
             todo.Name = item.Name;
 
             _context.TodoItems.Update(todo);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return new NoContentResult();
         }
 
@@ -102,16 +103,16 @@ namespace Village.Games.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
+        public async Task<IActionResult> DeleteAsync(long id)
         {
-            var todo = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+            var todo = await  _context.TodoItems.FirstOrDefaultAsync(t => t.Id == id);
             if (todo == null)
             {
                 return NotFound();
             }
 
             _context.TodoItems.Remove(todo);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return new NoContentResult();
         }
     }
