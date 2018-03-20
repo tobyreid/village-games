@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Village.Games.Data;
 using Village.Games.Models;
 
 namespace Village.Games.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize(Policy = "ApiUser")]
     public class TodoController : Controller
     {
         private readonly TodoContext _context;

@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Village.Games.Models;
 
-namespace Village.Games.Models
+namespace Village.Games.Data
 {
-    public class TodoContext : DbContext
+    public class TodoContext : IdentityDbContext<AppUser>
     {
         public TodoContext(DbContextOptions<TodoContext> options)
             : base(options)
@@ -14,6 +16,7 @@ namespace Village.Games.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TodoItem>().ToTable("TodoItem");
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
