@@ -1,19 +1,15 @@
-
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Village.Games.Data;
 using Village.Games.Models;
 
-
-namespace AngularASPNETCore2WebApiAuth.Controllers
+namespace Village.Games.Controllers.Api
 {
-  [Authorize(Policy = "ApiUser")]
+  [Authorize]
   [Route("api/[controller]/[action]")]
   public class DashboardController : Controller
   {

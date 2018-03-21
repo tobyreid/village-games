@@ -22,6 +22,8 @@
     <PackageReference Include="Automapper" Version="6.2.2" />
     <PackageReference Include="automapper.extensions.microsoft.dependencyinjection" Version="3.2.0" />
     <PackageReference Include="fluentvalidation.aspnetcore" Version="7.5.2" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.1.0" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />

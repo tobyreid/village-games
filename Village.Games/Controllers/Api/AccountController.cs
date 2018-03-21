@@ -12,7 +12,7 @@ using Village.Games.Helpers;
 using Village.Games.Models;
 using Village.Games.ViewModels;
 
-namespace Village.Games.Controllers
+namespace Village.Games.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/account")]
