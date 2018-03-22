@@ -14,6 +14,7 @@ namespace Village.Games.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TodoItem>().ToTable("TodoItem");
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
