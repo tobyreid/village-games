@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -36,7 +40,13 @@ namespace Village.Idiot
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                
+                options.UseSqlServer(connectionString);
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
                 {
@@ -57,26 +67,33 @@ namespace Village.Idiot
             services.AddMvc();
 
             // configure identity server with in-memory stores, keys, clients and scopes
-            var builder = services.AddIdentityServer(options =>
+            services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
                 })
-                .AddInMemoryPersistedGrants()
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients())
+                .AddDeveloperSigningCredential()
+                    .AddConfigurationStore(options =>
+                    {
+                        options.ConfigureDbContext = builder =>
+                            builder.UseSqlServer(connectionString,
+                                sql => sql.MigrationsAssembly(migrationsAssembly));
+                    })
+                    // this adds the operational data from DB (codes, tokens, consents)
+                    .AddOperationalStore(options =>
+                    {
+                        options.ConfigureDbContext = builder =>
+                            builder.UseSqlServer(connectionString,
+                                sql => sql.MigrationsAssembly(migrationsAssembly));
+
+                        // this enables automatic token cleanup. this is optional.
+                        options.EnableTokenCleanup = true;
+                        options.TokenCleanupInterval = 30;
+                    })
                 .AddAspNetIdentity<ApplicationUser>();
-            if (Environment.IsDevelopment())
-            {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
-            {
-                throw new Exception("need to configure key material");
-            }
+            
 
             services.AddAuthentication();
         }
@@ -84,6 +101,9 @@ namespace Village.Idiot
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // this will do the initial DB population
+            InitializeDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -116,21 +136,41 @@ namespace Village.Idiot
 
             
         }
-    }
-    public class PasswordValidator : IResourceOwnerPasswordValidator
-    {
-        public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+        private void InitializeDatabase(IApplicationBuilder app)
         {
-            return Task.Factory.StartNew(() =>
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                if (context.UserName.Equals("alice") && context.Password.Equals("password"))
+                serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+
+                var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                context.Database.Migrate();
+                if (!context.Clients.Any())
                 {
-                    context.Result = new GrantValidationResult("1", "password", new List<Claim>
+                    foreach (var client in Config.GetClients())
                     {
-                        new Claim("cherry_sample", "hello")
-                    });
+                        context.Clients.Add(client.ToEntity());
+                    }
+                    context.SaveChanges();
                 }
-            });
+
+                if (!context.IdentityResources.Any())
+                {
+                    foreach (var resource in Config.GetIdentityResources())
+                    {
+                        context.IdentityResources.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+
+                if (!context.ApiResources.Any())
+                {
+                    foreach (var resource in Config.GetApiResources())
+                    {
+                        context.ApiResources.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }
