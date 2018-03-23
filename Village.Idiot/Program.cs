@@ -20,7 +20,7 @@ namespace Village.Idiot
                 .UseStartup<Startup>()
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    if (!context.HostingEnvironment.IsDevelopment())
+                    if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "azurekeyvault.json")))
                     {
                         config.SetBasePath(Directory.GetCurrentDirectory())
                             .AddJsonFile("azurekeyvault.json", false, true)
