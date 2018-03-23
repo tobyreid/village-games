@@ -139,7 +139,20 @@ namespace Village.Idiot
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+                var appDb = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                appDb.Database.Migrate();
+                if (!appDb.Users.Any())
+                {
+                    var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                    var user = userManager.CreateAsync(new ApplicationUser
+                    {
+                        Email = "test@test.com",
+                        UserName = "test@test.com"
+                    },"password").Result;
+                    appDb.SaveChanges();
+
+
+                }
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
