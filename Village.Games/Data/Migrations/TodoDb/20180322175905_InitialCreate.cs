@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace Village.Games.Migrations
+namespace Village.Games.Data.Migrations.TodoDb
 {
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TodoItem",
+                name: "TodoItems",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -20,14 +20,14 @@ namespace Village.Games.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TodoItem", x => x.Id);
+                    table.PrimaryKey("PK_TodoItems", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TodoItem");
+                name: "TodoItems");
         }
     }
 }

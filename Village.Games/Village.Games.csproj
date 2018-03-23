@@ -15,10 +15,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.4.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />

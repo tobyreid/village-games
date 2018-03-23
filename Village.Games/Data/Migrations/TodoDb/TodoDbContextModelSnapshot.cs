@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using Village.Games.Models;
 
-namespace Village.Games.Migrations
+namespace Village.Games.Data.Migrations.TodoDb
 {
-    [DbContext(typeof(TodoContext))]
-    [Migration("20180319120323_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(TodoDbContext))]
+    partial class TodoDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +32,7 @@ namespace Village.Games.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoItem");
+                    b.ToTable("TodoItems");
                 });
 #pragma warning restore 612, 618
         }
