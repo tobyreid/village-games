@@ -1,44 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Village.Games.Models;
 
 namespace Village.Games.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize]
     public class TodoController : Controller
     {
-        private readonly TodoContext _context;
+        private readonly TodoDbContext _dbContext;
 
-        public TodoController(TodoContext context)
+        public TodoController(TodoDbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
 
-            if (_context.TodoItems.Count() == 0)
+            if (_dbContext.TodoItems.Count() == 0)
             {
-                _context.TodoItems.Add(new TodoItem { Name = "Item1" });
-                _context.SaveChanges();
+                _dbContext.TodoItems.Add(new TodoItem { Name = "Item1" });
+                _dbContext.SaveChanges();
             }
         }
 
         [HttpGet]
-        public IEnumerable<TodoItem> GetAll()
+        public async Task<IEnumerable<TodoItem>> GetAllAsync()
         {
-            return _context.TodoItems.ToList();
+            return await _dbContext.TodoItems.ToListAsync();
         }
 
         [HttpGet("{id}", Name = "GetTodo")]
-        public IActionResult GetById(long id)
+        public async Task<IActionResult> GetByIdAsync(long id)
         {
-            var item = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+            var item = await _dbContext.TodoItems.FirstOrDefaultAsync(t => t.Id == id);
             if (item == null)
             {
                 return NotFound();
             }
-            return new ObjectResult(item);
+            return new  ObjectResult(item);
         }
         /// <summary>
         /// Creates a TodoItem.
@@ -61,28 +63,28 @@ namespace Village.Games.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(TodoItem), 201)]
         [ProducesResponseType(typeof(TodoItem), 400)]
-        public IActionResult Create([FromBody] TodoItem item)
+        public async Task<IActionResult> CreateAsync([FromBody] TodoItem item)
         {
             if (item == null)
             {
                 return BadRequest();
             }
 
-            _context.TodoItems.Add(item);
-            _context.SaveChanges();
+            _dbContext.TodoItems.Add(item);
+            await _dbContext.SaveChangesAsync();
 
             return CreatedAtRoute("GetTodo", new { id = item.Id }, item);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(long id, [FromBody] TodoItem item)
+        public async Task<IActionResult> UpdateAsync(long id, [FromBody] TodoItem item)
         {
             if (item == null || item.Id != id)
             {
                 return BadRequest();
             }
 
-            var todo = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+            var todo = await _dbContext.TodoItems.FirstOrDefaultAsync(t => t.Id == id);
             if (todo == null)
             {
                 return NotFound();
@@ -91,8 +93,8 @@ namespace Village.Games.Controllers
             todo.IsComplete = item.IsComplete;
             todo.Name = item.Name;
 
-            _context.TodoItems.Update(todo);
-            _context.SaveChanges();
+            _dbContext.TodoItems.Update(todo);
+            await _dbContext.SaveChangesAsync();
             return new NoContentResult();
         }
 
@@ -102,16 +104,16 @@ namespace Village.Games.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
+        public async Task<IActionResult> DeleteAsync(long id)
         {
-            var todo = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+            var todo = await  _dbContext.TodoItems.FirstOrDefaultAsync(t => t.Id == id);
             if (todo == null)
             {
                 return NotFound();
             }
 
-            _context.TodoItems.Remove(todo);
-            _context.SaveChanges();
+            _dbContext.TodoItems.Remove(todo);
+            await _dbContext.SaveChangesAsync();
             return new NoContentResult();
         }
     }
