@@ -2,21 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Antiforgery.Internal;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Village.Games.Models;
 
@@ -110,7 +103,7 @@ namespace Village.Games
             }
 
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
         }
     }
 
