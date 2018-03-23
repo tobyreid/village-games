@@ -6,11 +6,11 @@ This repository is a playground for me to learn more about ASP.NET Core 2, githu
 
 ## Repository Setup
 
-CODEOWNERS determines who should perform a review in PR / auth merge
-ISSUE_TEMPLATE.md defines the "New Issue" workflow in github
-PULL_REQUEST_TEMPLATE.md defines the "Create Pull Request" workflow in github
-.gitignore defines the ignored files
-.editorconfig ensures that code style is followed
+* CODEOWNERS determines who should perform a review in PR / auth merge
+* ISSUE_TEMPLATE.md defines the "New Issue" workflow in github
+* PULL_REQUEST_TEMPLATE.md defines the "Create Pull Request" workflow in github
+* .gitignore defines the ignored files
+* .editorconfig ensures that code style is followed
 
 ## ASP.NET Solution
 
@@ -18,9 +18,11 @@ PULL_REQUEST_TEMPLATE.md defines the "Create Pull Request" workflow in github
 
 Visual Studio 2017 Community 15.6.2 or later with ASP.NET tools
 
-### Environment
+### Getting Started
 
 So long as you have met the requirements, the set both projects as startup and they should both spool up.
+
+There are no external dependencies that need setting up
 
 * Goto the Swagger UI at http://localhost:5001/swagger
 * Click "Authorize"
