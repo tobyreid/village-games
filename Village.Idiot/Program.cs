@@ -20,20 +20,23 @@ namespace Village.Idiot
                 .UseStartup<Startup>()
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "azurekeyvault.json")))
+                    config.SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("Azurekeyvault.json", true, true)
+                        .AddEnvironmentVariables();
+
+                    var builtConfig = config.Build();
+                    var clientId = builtConfig["AzureKeyVault:clientId"];
+                    var clientSecret = builtConfig["AzureKeyVault:clientSecret"];
+                    var vault = builtConfig["AzureKeyVault:vault"];
+                    if (!string.IsNullOrWhiteSpace(vault))
                     {
-                        config.SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("azurekeyvault.json", false, true)
-                            .AddEnvironmentVariables();
-
-                        var builtConfig = config.Build();
-
                         config.AddAzureKeyVault(
-                            $"https://{builtConfig["azureKeyVault:vault"]}.vault.azure.net/",
-                            builtConfig["azureKeyVault:clientId"],
-                            builtConfig["azureKeyVault:clientSecret"]
+                            $"https://{vault}.vault.azure.net/",
+                            clientId,
+                            clientSecret
                         );
                     }
+
                 })
                 .Build();
 
