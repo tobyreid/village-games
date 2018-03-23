@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore;
+﻿using System.IO;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Village.Games
 {
@@ -13,8 +15,24 @@ namespace Village.Games
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
                 .UseStartup<Startup>()
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    if (!context.HostingEnvironment.IsDevelopment())
+                    {
+                        config.SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("azurekeyvault.json", false, true)
+                            .AddEnvironmentVariables();
+
+                        var builtConfig = config.Build();
+
+                        config.AddAzureKeyVault(
+                            $"https://{builtConfig["azureKeyVault:vault"]}.vault.azure.net/",
+                            builtConfig["azureKeyVault:clientId"],
+                            builtConfig["azureKeyVault:clientSecret"]
+                        );
+                    }
+                })
                 .Build();
     }
 }

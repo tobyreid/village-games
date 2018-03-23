@@ -93,7 +93,6 @@ namespace Village.Idiot
                         options.TokenCleanupInterval = 30;
                     })
                 .AddAspNetIdentity<ApplicationUser>();
-            
 
             services.AddAuthentication();
         }
