@@ -5,7 +5,14 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Village.Games", "Village.Games\Village.Games.csproj", "{8B4C2372-0A10-4088-883B-1121870D24EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Village.Idiot", "Village.Idiot\Village.Idiot.csproj", "{2911589A-5209-400B-9670-1B811EEF80FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Village.Idiot", "Village.Idiot\Village.Idiot.csproj", "{2911589A-5209-400B-9670-1B811EEF80FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBD285E9-338A-442E-87CC-8AA88D33D1FD}"
+	ProjectSection(SolutionItems) = preProject
+		CODEOWNERS = CODEOWNERS
+		ISSUE_TEMPLATE.md = ISSUE_TEMPLATE.md
+		PULL_REQUEST_TEMPLATE.md = PULL_REQUEST_TEMPLATE.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
