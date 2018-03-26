@@ -13,7 +13,7 @@ https://docs.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?ta
 https://www.humankode.com/asp-net-core/how-to-store-secrets-in-azure-key-vault-using-net-core
 https://github.com/IdentityServer/IdentityServer4.Samples
 https://fullstackmark.com/post/13/jwt-authentication-with-aspnet-core-2-web-api-angular-5-net-core-identity-and-facebook-login
-
+https://github.com/nil4/xdt-samples/ - Transform web.config for Village.Games when deployed in sub-directory
 
 ## Repository Setup
 
