@@ -32,7 +32,7 @@ namespace Village.Idiot
             // client credentials client
             return new List<Client>
             {
-                
+
                 new Client
                 {
                     ClientId = "swagger-ui",
@@ -44,11 +44,16 @@ namespace Village.Idiot
                         "http://localhost:5001/swagger/oauth2-redirect.html" ,
                         "https://village-games.azurewebsites.net/api/swagger/oauth2-redirect.html"
                     },
-                    PostLogoutRedirectUris = { "http://localhost:5001/swagger/" },
+                    PostLogoutRedirectUris =
+                    {
+                        "http://localhost:5001/swagger/",
+                        "https://village-games.azurewebsites.net/api/swagger/"
+                    },
                     AllowedScopes =
                     {
                         "village-games"
-                    }
+                    },
+                    RequireConsent = false
                 }
             };
         }
