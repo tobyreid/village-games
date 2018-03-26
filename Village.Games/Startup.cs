@@ -93,7 +93,7 @@ namespace Village.Games
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("v1/swagger.json", "My API V1");
                 c.OAuthClientId("swagger-ui");
             });
             
