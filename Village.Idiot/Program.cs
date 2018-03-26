@@ -17,6 +17,7 @@ namespace Village.Idiot
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .ConfigureAppConfiguration((context, config) =>
                 {
