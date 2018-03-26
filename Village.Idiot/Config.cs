@@ -39,12 +39,16 @@ namespace Village.Idiot
                     ClientName = "Swagger UI Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-                    RedirectUris = { "http://localhost:5001/swagger/o2c.html", "http://localhost:5001/swagger/oauth2-redirect.html" },
+                    RedirectUris = {
+                        "http://localhost:5001/swagger/o2c.html",
+                        "http://localhost:5001/swagger/oauth2-redirect.html" ,
+                        "https://village-games.azurewebsites.net/api/swagger/oauth2-redirect.html"
+                    },
                     PostLogoutRedirectUris = { "http://localhost:5001/swagger/" },
                     AllowedScopes =
                     {
                         "village-games"
-                    },
+                    }
                 }
             };
         }
