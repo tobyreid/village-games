@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -78,7 +75,7 @@ namespace Village.Games
                 options.Authority = Configuration.GetSection("IdentityServerSettings:Host").Value;
                 options.RequireHttpsMetadata = false;
                 options.ApiName = "village-games";
-                options.JwtBackChannelHandler = new HttpMessageHandl();
+                options.JwtBackChannelHandler = new WrappedHttpMessageHandler();
             });
         }
  
@@ -105,38 +102,5 @@ namespace Village.Games
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
-    }
-
-    public static class MessageExtensions
-    {
-        public static HttpRequestMessage Clone(this HttpRequestMessage req)
-        {
-            HttpRequestMessage clone = new HttpRequestMessage(req.Method, req.RequestUri);
-
-            clone.Content = req.Content;
-            clone.Version = req.Version;
-
-            foreach (KeyValuePair<string, object> prop in req.Properties)
-            {
-                clone.Properties.Add(prop);
-            }
-
-            foreach (KeyValuePair<string, IEnumerable<string>> header in req.Headers)
-            {
-                clone.Headers.TryAddWithoutValidation(header.Key, header.Value);
-            }
-
-            return clone;
-        }
-    }
-    public class HttpMessageHandl : HttpMessageHandler
-    {
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            var httpClient = new HttpClient();
-            var result = httpClient.SendAsync(request.Clone(), cancellationToken);
-            return result;
-        }
-
     }
 }
