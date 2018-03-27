@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Village.Games.Models;
 
 namespace Village.Games.Controllers
@@ -14,10 +15,11 @@ namespace Village.Games.Controllers
     public class TodoController : Controller
     {
         private readonly TodoDbContext _dbContext;
-
-        public TodoController(TodoDbContext dbContext)
+        private readonly IQueueResolver _queueResolver;
+        public TodoController(TodoDbContext dbContext, IQueueResolver queueResolver)
         {
             _dbContext = dbContext;
+            _queueResolver = queueResolver;
 
             if (_dbContext.TodoItems.Count() == 0)
             {
@@ -29,6 +31,7 @@ namespace Village.Games.Controllers
         [HttpGet]
         public async Task<IEnumerable<TodoItem>> GetAllAsync()
         {
+            await _queueResolver.GetQueue(AzureQueues.EmailQueue).AddMessageAsync(new CloudQueueMessage("{Name: \"Toby\"}"));
             return await _dbContext.TodoItems.ToListAsync();
         }
 
