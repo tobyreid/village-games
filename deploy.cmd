@@ -71,11 +71,11 @@ call :ExecuteCmd dotnet restore "%DEPLOYMENT_SOURCE%\Village.Games.sln"
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. Build and publish
-call :ExecuteCmd dotnet publish "%DEPLOYMENT_SOURCE%\Village.Games\Village.Games.csproj" --output "%DEPLOYMENT_TEMP%\Api" --configuration Release
+call :ExecuteCmd dotnet publish "%DEPLOYMENT_SOURCE%\Village.Api\Village.Api.csproj" --output "%DEPLOYMENT_TEMP%\Api" --configuration Release
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. Build and publish
-call :ExecuteCmd dotnet publish "%DEPLOYMENT_SOURCE%\Village.Idiot\Village.Idiot.csproj" --output "%DEPLOYMENT_TEMP%" --configuration Release
+call :ExecuteCmd dotnet publish "%DEPLOYMENT_SOURCE%\Village.Auth\Village.Auth.csproj" --output "%DEPLOYMENT_TEMP%" --configuration Release
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 3. KuduSync
