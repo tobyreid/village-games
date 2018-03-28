@@ -77,6 +77,12 @@ namespace Village.Games
                 options.ApiName = "village-games";
                 options.JwtBackChannelHandler = new WrappedHttpMessageHandler();
             });
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+
+            services.AddTransient<IQueueResolver, QueueResolver>();
+            BootstrapAzureQueues.CreateKnownAzureQueues(Configuration.GetConnectionString("AzureStorageConnectionString"));
+
+
         }
  
 
