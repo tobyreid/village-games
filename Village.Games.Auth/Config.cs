@@ -41,12 +41,14 @@ namespace Village.Games.Auth
                     RedirectUris = {
                         "http://localhost:5001/swagger/o2c.html",
                         "http://localhost:5001/swagger/oauth2-redirect.html" ,
-                        "https://village-games.azurewebsites.net/api/swagger/oauth2-redirect.html"
+                        "https://village-games.azurewebsites.net/api/swagger/oauth2-redirect.html",
+                        "https://village-games-api.azurewebsites.net/swagger/oauth2-redirect.html",
                     },
                     PostLogoutRedirectUris =
                     {
                         "http://localhost:5001/swagger/",
-                        "https://village-games.azurewebsites.net/api/swagger/"
+                        "https://village-games.azurewebsites.net/api/swagger/",
+                        "https://village-games.azurewebsites.net/swagger/"
                     },
                     AllowedScopes =
                     {
