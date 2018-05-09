@@ -11,7 +11,7 @@ namespace Village.Games.Functions
     }
     public static class EmailFunction
     {
-        [FunctionName("Function1")]
+        [FunctionName("EmailFunction")]
         public static async Task Run([QueueTrigger("email-queue", Connection = "AzureStorageConnectionString")]EmailTask myQueueItem, TraceWriter log)
         {
 
