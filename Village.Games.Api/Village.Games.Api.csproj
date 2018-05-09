@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
@@ -40,12 +40,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Target Name="RemoveHandlersFromWebConfig" AfterTargets="_TransformWebConfig">
-    <PropertyGroup>
-      <_SourceWebConfig>$(PublishDir)Web.config</_SourceWebConfig>
-      <_XdtTransform>$(MSBuildThisFileDirectory)Web.RemoveHandlers.config</_XdtTransform>
-      <_TargetWebConfig>$(PublishDir)Web.config</_TargetWebConfig>
-    </PropertyGroup>
-    <Exec Command="dotnet transform-xdt --xml &quot;$(_SourceWebConfig)&quot; --transform &quot;$(_XdtTransform)&quot; --output &quot;$(_TargetWebConfig)&quot;" />
-  </Target>
 </Project>

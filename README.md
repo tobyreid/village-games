@@ -6,14 +6,14 @@ This repository is a playground for me to learn more about ASP.NET Core 2, githu
 
 ## Tutorials/References Used
 
-https://github.com/BenjaminAbt/Samples.AspNetCore-IdentityServer4 - Top read
-https://identityserver4.readthedocs.io/en/dev/quickstarts/6_aspnet_identity.html
-https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/master/test/WebSites/OAuth2Integration
-https://docs.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?tabs=aspnetcore2x
-https://www.humankode.com/asp-net-core/how-to-store-secrets-in-azure-key-vault-using-net-core
-https://github.com/IdentityServer/IdentityServer4.Samples
-https://fullstackmark.com/post/13/jwt-authentication-with-aspnet-core-2-web-api-angular-5-net-core-identity-and-facebook-login
-https://github.com/nil4/xdt-samples/ - Transform web.config for Village.Games when deployed in sub-directory
+- https://github.com/BenjaminAbt/Samples.AspNetCore-IdentityServer4 - Top read
+- https://identityserver4.readthedocs.io/en/dev/quickstarts/6_aspnet_identity.html
+- https://github.com/domaindrivendev/Swashbuckle.AspNetCore/tree/master/test/WebSites/OAuth2Integration
+- https://docs.microsoft.com/en-us/aspnet/core/security/key-vault-configuration?tabs=aspnetcore2x
+- https://www.humankode.com/asp-net-core/how-to-store-secrets-in-azure-key-vault-using-net-core
+- https://github.com/IdentityServer/IdentityServer4.Samples
+- https://fullstackmark.com/post/13/jwt-authentication-with-aspnet-core-2-web-api-angular-5-net-core-identity-and-facebook-login
+- https://github.com/nil4/xdt-samples/ - Transform web.config for Village.Games when deployed in sub-directory [removed!]
 
 ## Repository Setup
 
