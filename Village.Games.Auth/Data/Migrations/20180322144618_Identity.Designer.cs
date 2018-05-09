@@ -127,7 +127,7 @@ namespace Village.Games.Auth.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Village.Idiot.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Village.Games.Auth.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -188,7 +188,7 @@ namespace Village.Games.Auth.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Village.Idiot.Models.ApplicationUser")
+                    b.HasOne("Village.Games.Auth.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -196,7 +196,7 @@ namespace Village.Games.Auth.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Village.Idiot.Models.ApplicationUser")
+                    b.HasOne("Village.Games.Auth.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -209,7 +209,7 @@ namespace Village.Games.Auth.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Village.Idiot.Models.ApplicationUser")
+                    b.HasOne("Village.Games.Auth.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -217,7 +217,7 @@ namespace Village.Games.Auth.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Village.Idiot.Models.ApplicationUser")
+                    b.HasOne("Village.Games.Auth.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
