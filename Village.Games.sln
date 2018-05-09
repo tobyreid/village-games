@@ -9,11 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Village.Games.Auth", "Villa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBD285E9-338A-442E-87CC-8AA88D33D1FD}"
 	ProjectSection(SolutionItems) = preProject
-		.deployment = .deployment
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		CODEOWNERS = CODEOWNERS
-		deploy.cmd = deploy.cmd
 		ISSUE_TEMPLATE.md = ISSUE_TEMPLATE.md
 		PULL_REQUEST_TEMPLATE.md = PULL_REQUEST_TEMPLATE.md
 		README.md = README.md
