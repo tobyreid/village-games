@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <ApplicationInsightsResourceId>/subscriptions/0af93bf5-8046-422d-8fb8-b6bbd0e268e3/resourcegroups/Default-Web-WestEurope/providers/microsoft.insights/components/village-games</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/0af93bf5-8046-422d-8fb8-b6bbd0e268e3/resourcegroups/Default-Web-WestEurope/providers/microsoft.insights/components/village-games</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
