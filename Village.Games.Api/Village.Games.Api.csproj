@@ -34,6 +34,12 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Target Name="RemoveHandlersFromWebConfig" AfterTargets="_TransformWebConfig">
     <PropertyGroup>
       <_SourceWebConfig>$(PublishDir)Web.config</_SourceWebConfig>
